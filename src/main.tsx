@@ -1,11 +1,17 @@
-import * as React from 'react';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Routes from './App';
+import { ChakraProvider, CSSReset } from '@chakra-ui/react';
+import { AuthProvider } from './contexts/userContext';
 
-import { ChakraProvider } from '@chakra-ui/react';
-
-function App() {
-  return (
-    <ChakraProvider>
-      <App />
-    </ChakraProvider>
-  );
-}
+ReactDOM.render(
+  <React.StrictMode>
+    <AuthProvider>
+      <ChakraProvider>
+        <CSSReset />
+        <Routes />
+      </ChakraProvider>
+    </AuthProvider>
+  </React.StrictMode>,
+  document.getElementById('root')
+);
