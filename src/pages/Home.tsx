@@ -10,7 +10,12 @@ import {
   Tr,
   Th,
   Td,
+  Alert,
+  AlertIcon,
+  AlertTitle,
+  AlertDescription,
 } from '@chakra-ui/react';
+
 import api from '../services/api';
 import { ClassroomType } from '../types';
 import moment from 'moment';
@@ -20,9 +25,9 @@ import { useHistory } from 'react-router';
 
 export default function Home() {
   const [classRooms, setClassRooms] = useState<[ClassroomType] | []>([]);
-
-  const { user, handleClassroom } = useAuth();
-  const history = useHistory();
+  const [inicio, setInicio] = useState(false);
+  const [fechar, setFechar] = useState(false);
+  const [error, setError] = useState(false);
 
   async function getClassrooms() {
     const token = localStorage.getItem('token');
@@ -42,40 +47,68 @@ export default function Home() {
     const token = localStorage.getItem('token');
 
     if (token) {
-      const response = await api.post(
-        '/embedded',
-        {
-          method: '<INIT>',
-          classroom,
-        },
-        {
-          headers: {
-            Authorization: token,
+      try {
+        const response = await api.post(
+          '/embedded',
+          {
+            method: '<INIT>',
+            classroom,
           },
-        }
-      );
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
 
-      console.log({ response });
+        if (response.data) {
+          setInicio(true);
+
+          setTimeout(() => {
+            setInicio(false);
+          }, 3000);
+        }
+      } catch (error) {
+        setError(true);
+
+        setTimeout(() => {
+          setError(false);
+        }, 4000);
+      }
     }
   }
   async function handleStopRoom(classroom: string) {
     const token = localStorage.getItem('token');
 
-    if (token) {
-      const response = await api.post(
-        '/embedded',
-        {
-          method: '<CLOSE>',
-          classroom,
-        },
-        {
-          headers: {
-            Authorization: token,
+    try {
+      if (token) {
+        const response = await api.post(
+          '/embedded',
+          {
+            method: '<CLOSE>',
+            classroom,
           },
-        }
-      );
+          {
+            headers: {
+              Authorization: token,
+            },
+          }
+        );
 
-      console.log({ response });
+        if (response.data) {
+          setFechar(true);
+
+          setTimeout(() => {
+            setFechar(false);
+          }, 3000);
+        }
+      }
+    } catch (error) {
+      setError(true);
+
+      setTimeout(() => {
+        setError(false);
+      }, 4000);
     }
   }
 
@@ -86,7 +119,29 @@ export default function Home() {
   return (
     <>
       <Header />
-      <Container maxW="container.lg" height="100vh">
+
+      <Container maxW="container.lg" height="100vh" padding="1rem">
+        {inicio && (
+          <Alert status="success" marginBottom="1rem">
+            <AlertIcon />
+            Chamada iniciada
+          </Alert>
+        )}
+
+        {fechar && (
+          <Alert status="info" marginBottom="1rem">
+            <AlertIcon />
+            Chamada fechada
+          </Alert>
+        )}
+
+        {error && (
+          <Alert status="info" marginBottom="1rem">
+            <AlertIcon />
+            Erro ao conectar com a API
+          </Alert>
+        )}
+
         <Box>
           <Heading as="h2" size="xl" marginTop="1rem">
             Sistema de chamadas RFID

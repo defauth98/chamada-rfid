@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Input, Button, Box } from '@chakra-ui/react';
+import { Container, Input, Button, Box, Text } from '@chakra-ui/react';
 import { useHistory } from 'react-router';
 import { useAuth } from '../contexts/userContext';
 import Loading from '../components/Loading';
@@ -9,7 +9,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
 
   const history = useHistory();
-  const { handleLogin, user, loading } = useAuth();
+  const { handleLogin, user, loading, errorMessage } = useAuth();
 
   useEffect(() => {
     if (user && user._id) {
@@ -63,6 +63,11 @@ export default function Login() {
         <Button width="100%" onClick={() => handleLogin(ra, password)}>
           Login
         </Button>
+        {errorMessage && (
+          <Text marginTop="1rem" color="red">
+            {errorMessage}
+          </Text>
+        )}
       </Box>
     </Container>
   );

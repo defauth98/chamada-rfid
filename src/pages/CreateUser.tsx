@@ -12,14 +12,13 @@ import {
 
 import Header from '../components/Header';
 import api from '../services/api';
-import { useAuth } from '../contexts/userContext';
 import { useHistory } from 'react-router';
 
 export default function CreateUser() {
-  const [major, setMajor] = useState('');
   const [ra, setRa] = useState('');
-  const [role, setRole] = useState('');
   const [rfid, setRfid] = useState('');
+  const [major, setMajor] = useState('COMPUTACAO');
+  const [role, setRole] = useState('PROFESSOR');
   const [status, setStatus] = useState(false);
 
   const history = useHistory();
@@ -61,7 +60,7 @@ export default function CreateUser() {
       )}
       <Container
         maxW="container.lg"
-        height="100vh"
+        height="70vh"
         display="flex"
         justifyContent="center"
         alignItems="center"
@@ -70,18 +69,21 @@ export default function CreateUser() {
           <Text textAlign="center" fontSize="1.5rem" marginBottom="1rem">
             Criar usuário
           </Text>
+          RA
           <Input
             placeholder="RA"
             marginBottom="1rem"
             value={ra}
             onChange={(event) => setRa(event.target.value)}
           />
+          RFID
           <Input
             placeholder="RFID"
             marginBottom="1rem"
             value={rfid}
             onChange={(event) => setRfid(event.target.value)}
           />
+          Major
           <Select
             marginBottom="1rem"
             value={major}
@@ -92,12 +94,13 @@ export default function CreateUser() {
             <option value="QUIMICA">QUÍMICA</option>
             <option value="PROFESSOR">PROFESSOR</option>
           </Select>
+          Role
           <Select
             marginBottom="1rem"
             value={role}
             onChange={(event) => setRole(event.target.value)}
           >
-            <option value="ROFESSOR">ROFESSOR</option>
+            <option value="ROFESSOR">PROFESSOR</option>
             <option value="EMBEDDED">EMBEDDED</option>
             <option value="STUDENT">STUDENT</option>
           </Select>

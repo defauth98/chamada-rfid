@@ -8,6 +8,7 @@ interface AuthContextData {
   loading: boolean;
   professorId: string;
   classRoom: ClassroomType | null;
+  errorMessage: string | null;
   handleLogin(ra: string, password: string): Promise<void>;
   handleLogout(): void;
   handleSetProfessor(id: string): void;
@@ -20,6 +21,7 @@ export const AuthProvider: React.FC = ({ children }) => {
   const [user, setUser] = useState<UserType | null>(null);
   const [professorId, setProfessor] = useState('');
   const [classRoom, setClassRoom] = useState<ClassroomType | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   const [loading, setLoading] = useState(false);
 
@@ -30,18 +32,25 @@ export const AuthProvider: React.FC = ({ children }) => {
   async function handleLogin(ra: string, password: string) {
     setLoading(true);
 
-    const response: any = await api.post('/authentication', {
-      strategy: 'local',
-      ra,
-      password,
-    });
+    try {
+      const response: any = await api.post('/authentication', {
+        strategy: 'local',
+        ra,
+        password,
+      });
 
-    if (response.data.accessToken) {
-      localStorage.setItem('token', response.data.accessToken);
+      if (response) {
+        if (response.data.accessToken) {
+          localStorage.setItem('token', response.data.accessToken);
+
+          setUser(response.data.user);
+          setLoading(false);
+        }
+      }
+    } catch (error) {
+      setLoading(false);
+      setErrorMessage('Invalid login');
     }
-
-    setUser(response.data.user);
-    setLoading(false);
   }
 
   function handleClassroom(classRoom: ClassroomType) {
@@ -61,6 +70,7 @@ export const AuthProvider: React.FC = ({ children }) => {
         loading,
         professorId,
         classRoom,
+        errorMessage,
         handleClassroom,
         handleSetProfessor,
         handleLogin,
