@@ -18,14 +18,17 @@ import { FrequencyType, UserType } from '../types';
 import moment from 'moment';
 import { useAuth } from '../contexts/userContext';
 import { useHistory } from 'react-router';
+import Loading from '../components/Loading';
 
 export default function Detail() {
   const [frequencys, setFrequencys] = useState<FrequencyType[] | []>([]);
+  const [loading, setLoading] = useState(false);
 
   const { user, classRoom } = useAuth();
   const history = useHistory();
 
   async function getFrequency() {
+    setLoading(true);
     const token = localStorage.getItem('token');
 
     if (token) {
@@ -52,17 +55,13 @@ export default function Detail() {
 
       const users = await Promise.all(usersResponse);
 
+      setLoading(false);
+
       if (users) {
         setFrequencys(users);
       }
     }
   }
-
-  useEffect(() => {
-    if (!user) {
-      history.push('/');
-    }
-  }, [user]);
 
   useEffect(() => {
     getFrequency();
@@ -86,6 +85,12 @@ export default function Detail() {
               </Tr>
             </Thead>
             <Tbody>
+              {loading && (
+                <Box margin="0 auto">
+                  <Loading type="bars" color="black" />
+                </Box>
+              )}
+
               {frequencys.length > 0 &&
                 frequencys.map((frequency: FrequencyType) => {
                   console.log(frequency);

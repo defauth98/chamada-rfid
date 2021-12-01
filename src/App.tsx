@@ -1,6 +1,7 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link, Switch } from 'react-router-dom';
-import Header from './components/Header';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Create from './pages/Create';
+import CreateUser from './pages/CreateUser';
 import Edit from './pages/Details';
 import History from './pages/History';
 import Home from './pages/Home';
@@ -11,6 +12,12 @@ export default function Routes() {
     <>
       <Router>
         <Switch>
+          <Route path="/create-user">
+            <CreateUser />
+          </Route>
+          <Route path="/create">
+            <Create />
+          </Route>
           <Route path="/details/:id">
             <Edit />
           </Route>

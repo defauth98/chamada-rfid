@@ -83,12 +83,6 @@ export default function Home() {
     getClassrooms();
   }, []);
 
-  useEffect(() => {
-    if (!user) {
-      history.push('/');
-    }
-  }, [user]);
-
   return (
     <>
       <Header />

@@ -7,7 +7,17 @@ import { Button } from '@chakra-ui/button';
 import { useAuth } from '../contexts/userContext';
 
 export default function Header() {
-  const { user, handleLogout } = useAuth();
+  const { handleLogout, user } = useAuth();
+
+  function verifyUserRole() {
+    const userRole = user?.role as string;
+
+    if (userRole === 'PROFESSOR' || userRole === 'SYSADMIN') {
+      return true;
+    }
+
+    return false;
+  }
 
   return (
     <Container bg="blue" maxW="container.4xl">
@@ -22,14 +32,25 @@ export default function Header() {
           display="flex"
           justifyContent="space-between"
           alignItems="center"
-          width="15%"
+          width="40%"
         >
           <Link to="/home">
             <Text color="white">Home</Text>
           </Link>
-          <Link to="/History">
+          <Link to="/history">
             <Text color="white">Histórico</Text>
           </Link>
+
+          {verifyUserRole() && (
+            <>
+              <Link to="/create">
+                <Text color="white">Criar sala</Text>
+              </Link>
+              <Link to="/create-user">
+                <Text color="white">Criar usuário</Text>
+              </Link>
+            </>
+          )}
         </Box>
 
         <Button onClick={handleLogout}>Sair</Button>
