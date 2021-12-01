@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Input, Button, Box } from '@chakra-ui/react';
-import api from '../services/api';
 import { useHistory } from 'react-router';
 import { useAuth } from '../contexts/userContext';
 import Loading from '../components/Loading';
@@ -27,7 +26,7 @@ export default function Login() {
         alignItems="center"
         justifyContent="center"
       >
-        <Loading type="balls" color="#000" />;
+        <Loading type="cylon" color="#000" />
       </Container>
     );
 
