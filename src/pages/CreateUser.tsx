@@ -97,7 +97,7 @@ export default function CreateUser() {
             value={role}
             onChange={(event) => setRole(event.target.value)}
           >
-            <option value="ROFESSOR">ROFESSOR</option>
+            <option value="ROFESSOR">PROFESSOR</option>
             <option value="EMBEDDED">EMBEDDED</option>
             <option value="STUDENT">STUDENT</option>
           </Select>
