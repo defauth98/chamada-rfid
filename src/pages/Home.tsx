@@ -120,7 +120,7 @@ export default function Home() {
     <>
       <Header />
 
-      <Container maxW="container.lg" height="100vh" padding="1rem">
+      <Container maxW="container.lg" height="80vh" padding="1rem">
         {inicio && (
           <Alert status="success" marginBottom="1rem">
             <AlertIcon />
@@ -143,7 +143,7 @@ export default function Home() {
         )}
 
         <Box>
-          <Heading as="h2" size="xl" marginTop="1rem">
+          <Heading as="h2" size="lg" marginTop="1rem">
             Sistema de chamadas RFID
           </Heading>
 

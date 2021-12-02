@@ -53,7 +53,7 @@ export default function History() {
   return (
     <>
       <Header />
-      <Container maxW="container.lg" height="100vh">
+      <Container maxW="container.lg" height="90vh" padding="1rem">
         <Box>
           <Heading as="h2" size="lg" marginTop="1rem">
             Histórico de chamadas

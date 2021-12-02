@@ -57,7 +57,7 @@ export default function Create() {
       )}
       <Container
         maxW="container.lg"
-        height="100vh"
+        height="70vh"
         display="flex"
         justifyContent="center"
         alignItems="center"
